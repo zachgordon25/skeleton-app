@@ -7,11 +7,6 @@ import tempfile
 
 app = Flask(__name__)
 
-@app.route('/')
-def home():
-    return render_template('upload.html')
-
-
 
 def get_pixel_coordinates(image, scale_x, scale_y):
     coords = []
@@ -20,6 +15,7 @@ def get_pixel_coordinates(image, scale_x, scale_y):
             if np.any(image[y, x] != [255, 255, 255]):
                 coords.append((x * scale_x, y * scale_y))
     return coords
+
 
 def process_image(file_path):
     # Define the target height
@@ -45,9 +41,8 @@ def process_image(file_path):
     edges = cv2.Canny(gray_image, threshold1=30, threshold2=100)
 
     # Find contours
-    contours, _ = cv2.findContours(
-        edges, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE
-    )
+    # contours, _ = cv2.findContours(edges, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+    contours, _ = cv2.findContours(edges, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
 
     # Create a white image with the same dimensions as the resized image
     white_image = np.ones_like(resized_image) * 255
@@ -58,44 +53,60 @@ def process_image(file_path):
     # Get the coordinates of all non-white pixels in the image
     coordinates = get_pixel_coordinates(white_image, scale_x, scale_y)
 
+    # Format contours as list of strings
+    height = edges.shape[0]
+    contour_strings = []
+    for contour in contours:
+        for point in contour:
+            contour_string = "{:.7e} {:.7e}".format(
+                float(point[0][0]), float(height - point[0][1])
+            )
+            contour_strings.append(contour_string)
+
     # Define the output as a dictionary
-    output = {
-        'coordinates': coordinates,
-        'contours': contours
-    }
+    output = {"coordinates": coordinates, "contour_strings": contour_strings}
 
     # Return the output
     print("#0 runs")
     return output
 
 
-@app.route('/upload', methods=['POST'])
+@app.route("/")
+def home():
+    return render_template("upload.html")
+
+
+@app.route("/upload", methods=["POST"])
 def upload_image():
-    if 'file' not in request.files:
-        return 'No file part'
-    file = request.files['file']
-    if file.filename == '':
-        return 'No selected file'
+    if "file" not in request.files:
+        return "No file part"
+    file = request.files["file"]
+    if file.filename == "":
+        return "No selected file"
     if file:
         # Save the file temporarily
         file_path = os.path.join(tempfile.gettempdir(), file.filename)
         file.save(file_path)
-        
+
         # Now call your image processing function
         output = process_image(file_path)
-        
+
         # TODO: You'll need to decide how to handle the output of the processing.
         # You can access the coordinates with output['coordinates']
         # and the contours with output['contours']
-        
-        return f'Image uploaded and processed: {file.filename}\n{output}'
-    return 'No file uploaded'
+        # You can also access the contour strings with output['contour_strings']
+
+        print(f": {file.filename}\n{output['contour_strings']}")
+
+        return "Image uploaded and processed"
+    return "No file uploaded"
 
 
-@app.route('/view_image')
+@app.route("/view_image")
 def view_image():
     # TODO: add your code to display the image here
-    return 'View image page'
+    return "View image page"
+
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(debug=True, use_reloader=True)
