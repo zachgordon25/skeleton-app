@@ -100,15 +100,17 @@ def upload_image():
         output = process_image(file_path)
 
         filename = os.path.splitext(file.filename)[0]
-        skeleton_img = generate_skeleton(output["contour_strings"], filename)
+        # skeleton_img = generate_skeleton(output["contour_strings"], filename)
+        skeleton_img_base64 = generate_skeleton(output["contour_strings"], filename)
 
-        img_file_name = os.path.basename(skeleton_img)
+        img_file_name = os.path.basename(skeleton_img_base64)
 
         # return "Image uploaded and processed"
+        # <img src="/uploads/{img_file_name}" alt="Skeleton image">
         return f"""
         <h1>Image uploaded and processed</h1>
-        <img src="/uploads/{img_file_name}" alt="Skeleton image">
-        <a href="/uploads/{img_file_name}" download="skeleton.png">Download skeleton image</a>
+        <img src="data:image/png;base64,{skeleton_img_base64}" alt="Skeleton image">
+        <a href="data:image/png;base64,{skeleton_img_base64}" download="skeleton.png">Download skeleton image</a>
         """
     return "No file uploaded"
 

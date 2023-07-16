@@ -7,6 +7,37 @@ from PIL import Image  # ZG
 from skeleton.BlumMedialAxis import BlumMedialAxis
 from scipy.spatial import Delaunay
 
+
+import base64
+from io import BytesIO
+
+
+def generate_skeleton(contour_strings, filename):
+    # Convert contour_strings into numpy array
+    rough = np.array([list(map(float, s.split())) for s in contour_strings])
+
+    boundary = rough[:, 0] + 1j * rough[:, 1]
+    bma = BlumMedialAxis(boundary)
+
+    # Assuming you have a method called plot_with_edges() in BlumMedialAxis class
+    bma.plot_with_edges()
+
+    plt.title(filename)
+
+    # Create buffer
+    buf = BytesIO()
+
+    # Save figure to buffer in PNG format
+    plt.savefig(buf, format="png")
+
+    # Get buffer contents and encode in base64
+    image_base64 = base64.b64encode(buf.getvalue()).decode("utf-8")
+
+    plt.close()
+
+    return image_base64
+
+
 # Assuming you have the BlumMedialAxis class defined
 
 # pathin = "M-to-PY_Skel/original"
@@ -38,30 +69,30 @@ from scipy.spatial import Delaunay
 # print("#2 runs")
 
 
-def generate_skeleton(contour_strings, filename):
-    # Convert contour_strings into numpy array
-    rough = np.array([list(map(float, s.split())) for s in contour_strings])
+# def generate_skeleton(contour_strings, filename):
+#     # Convert contour_strings into numpy array
+#     rough = np.array([list(map(float, s.split())) for s in contour_strings])
 
-    boundary = rough[:, 0] + 1j * rough[:, 1]
-    bma = BlumMedialAxis(boundary)
+#     boundary = rough[:, 0] + 1j * rough[:, 1]
+#     bma = BlumMedialAxis(boundary)
 
-    # Assuming you have a method called plot_with_edges() in BlumMedialAxis class
-    bma.plot_with_edges()
+#     # Assuming you have a method called plot_with_edges() in BlumMedialAxis class
+#     bma.plot_with_edges()
 
-    plt.title(filename)
+#     plt.title(filename)
 
-    # Generate a unique file name
-    output_file = os.path.join("skeleton", f"SkeletonWithBoundary_{filename}.png")
+#     # Generate a unique file name
+#     output_file = os.path.join("skeleton", f"SkeletonWithBoundary_{filename}.png")
 
-    plt.savefig(output_file)
+#     plt.savefig(output_file)
 
-    # img = Image.open(output_file)
-    # output_gif = output_file.replace(".png", ".gif")
-    # img.save(output_gif, "gif")
-    plt.close()
+#     # img = Image.open(output_file)
+#     # output_gif = output_file.replace(".png", ".gif")
+#     # img.save(output_gif, "gif")
+#     plt.close()
 
-    # Remove the png file
-    # os.remove(output_file)
+#     # Remove the png file
+#     # os.remove(output_file)
 
-    # return output_gif
-    return output_file
+#     # return output_gif
+#     return output_file
