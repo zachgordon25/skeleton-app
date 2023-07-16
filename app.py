@@ -4,6 +4,10 @@ import numpy as np
 import os
 import tempfile
 
+from skeleton.extractKimiaEDF import generate_skeleton
+
+# from skeleton.BlumMedialAxis import BlumMedialAxis
+
 
 app = Flask(__name__)
 
@@ -67,7 +71,7 @@ def process_image(file_path):
     output = {"coordinates": coordinates, "contour_strings": contour_strings}
 
     # Return the output
-    print("#0 runs")
+    print("process_image")
     return output
 
 
@@ -91,12 +95,13 @@ def upload_image():
         # Now call your image processing function
         output = process_image(file_path)
 
+        filename = os.path.splitext(file.filename)[0]
+        skeleton_gif = generate_skeleton(output["contour_strings"], filename)
+
         # TODO: You'll need to decide how to handle the output of the processing.
         # You can access the coordinates with output['coordinates']
         # and the contours with output['contours']
         # You can also access the contour strings with output['contour_strings']
-
-        print(f": {file.filename}\n{output['contour_strings']}")
 
         return "Image uploaded and processed"
     return "No file uploaded"
