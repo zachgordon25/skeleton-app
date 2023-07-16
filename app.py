@@ -1,4 +1,4 @@
-from flask import Flask, request, render_template
+from flask import Flask, request, render_template, send_from_directory
 import cv2
 import numpy as np
 import os
@@ -92,19 +92,29 @@ def upload_image():
         file_path = os.path.join(tempfile.gettempdir(), file.filename)
         file.save(file_path)
 
+        # TODO: You'll need to decide how to handle the output of the processing.
+        # You can access the coordinates with output['coordinates']
+        # You can also access the contour strings with output['contour_strings']
+
         # Now call your image processing function
         output = process_image(file_path)
 
         filename = os.path.splitext(file.filename)[0]
         skeleton_gif = generate_skeleton(output["contour_strings"], filename)
 
-        # TODO: You'll need to decide how to handle the output of the processing.
-        # You can access the coordinates with output['coordinates']
-        # and the contours with output['contours']
-        # You can also access the contour strings with output['contour_strings']
+        img_file_name = os.path.basename(skeleton_gif)
 
-        return "Image uploaded and processed"
+        # return "Image uploaded and processed"
+        return f"""
+        <h1>Image uploaded and processed</h1>
+        <img src="/uploads/{img_file_name}" alt="Skeleton image">
+        """
     return "No file uploaded"
+
+
+@app.route("/uploads/<filename>")
+def send_uploaded_file(filename):
+    return send_from_directory("skeleton", filename)
 
 
 @app.route("/view_image")

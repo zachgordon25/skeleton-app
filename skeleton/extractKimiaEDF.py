@@ -55,12 +55,13 @@ def generate_skeleton(contour_strings, filename):
 
     plt.savefig(output_file)
 
-    img = Image.open(output_file)
-    output_gif = output_file.replace(".png", ".gif")
-    img.save(output_gif, "gif")
+    # img = Image.open(output_file)
+    # output_gif = output_file.replace(".png", ".gif")
+    # img.save(output_gif, "gif")
     plt.close()
 
     # Remove the png file
-    os.remove(output_file)
+    # os.remove(output_file)
 
-    return output_gif
+    # return output_gif
+    return output_file
