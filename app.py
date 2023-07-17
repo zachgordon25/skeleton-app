@@ -18,6 +18,7 @@ def get_pixel_coordinates(image, scale_x, scale_y):
         for x in range(image.shape[1]):
             if np.any(image[y, x] != [255, 255, 255]):
                 coords.append((x * scale_x, y * scale_y))
+    app.logger.info("get_pixel_coordinates")
     return coords
 
 
@@ -45,7 +46,6 @@ def process_image(file_path):
     edges = cv2.Canny(gray_image, threshold1=30, threshold2=100)
 
     # Find contours
-    # contours, _ = cv2.findContours(edges, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
     contours, _ = cv2.findContours(edges, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
 
     # Create a white image with the same dimensions as the resized image
@@ -71,12 +71,13 @@ def process_image(file_path):
     output = {"coordinates": coordinates, "contour_strings": contour_strings}
 
     # Return the output
-    # print("process_image")
+    app.logger.info("process_image")
     return output
 
 
 @app.route("/")
 def home():
+    app.logger.info("home")
     return render_template("upload.html")
 
 
@@ -104,13 +105,11 @@ def upload_image():
         output = process_image(file_path)
 
         filename = os.path.splitext(file.filename)[0]
-        # skeleton_img = generate_skeleton(output["contour_strings"], filename)
         skeleton_img_base64 = generate_skeleton(output["contour_strings"], filename)
 
         img_file_name = os.path.basename(skeleton_img_base64)
 
-        # return "Image uploaded and processed"
-        # <img src="/uploads/{img_file_name}" alt="Skeleton image">
+        app.logger.info("upload_image")
         return f"""
         <h1>Image uploaded and processed</h1>
         <img src="data:image/png;base64,{skeleton_img_base64}" alt="Skeleton image">
@@ -121,11 +120,13 @@ def upload_image():
 
 @app.route("/uploads/<filename>")
 def send_uploaded_file(filename):
+    app.logger.info("send_uploaded_file")
     return send_from_directory("skeleton", filename)
 
 
 @app.route("/view_image")
 def view_image():
+    app.logger.info("view_image")
     # TODO: add your code to display the image here
     return "View image page"
 
