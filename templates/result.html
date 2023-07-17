@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>{{ filename }}</title>
+  </head>
+  <body>
+    <h1>Image uploaded and processed</h1>
+    <img src="data:image/png;base64,{{ skeleton_img_base64 }}" alt="Skeleton image" />
+    <a href="data:image/png;base64,{{ skeleton_img_base64 }}" download="{{ filename }}-skeleton.png"
+      >Download skeleton image</a
+    >
+  </body>
+</html>
