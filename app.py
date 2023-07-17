@@ -84,9 +84,13 @@ def home():
 def upload_image():
     if "file" not in request.files:
         return "No file part"
+
     file = request.files["file"]
-    if file.filename == "":
-        return "No selected file"
+    if file.filename is None:
+        return "No file uploaded", 400
+
+    # Now you can use file.filename
+    file_path = os.path.join(tempfile.gettempdir(), file.filename)
     if file:
         # Save the file temporarily
         file_path = os.path.join(tempfile.gettempdir(), file.filename)
