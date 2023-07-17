@@ -71,7 +71,7 @@ def process_image(file_path):
     output = {"coordinates": coordinates, "contour_strings": contour_strings}
 
     # Return the output
-    print("process_image")
+    # print("process_image")
     return output
 
 
@@ -110,7 +110,7 @@ def upload_image():
         return f"""
         <h1>Image uploaded and processed</h1>
         <img src="data:image/png;base64,{skeleton_img_base64}" alt="Skeleton image">
-        <a href="data:image/png;base64,{skeleton_img_base64}" download="skeleton.png">Download skeleton image</a>
+        <a href="data:image/png;base64,{skeleton_img_base64}" download="{filename}-skeleton.png">Download skeleton image</a>
         """
     return "No file uploaded"
 

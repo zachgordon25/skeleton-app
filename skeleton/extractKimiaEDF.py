@@ -1,6 +1,9 @@
 import os
 import numpy as np
 from scipy.io import savemat
+import matplotlib
+
+matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 from pathlib import Path
 from PIL import Image  # ZG
