@@ -31,7 +31,12 @@ def process_image(file_path):
     gray_image = cv2.cvtColor(resized_image, cv2.COLOR_BGR2GRAY)
     edges = cv2.Canny(gray_image, threshold1=30, threshold2=100)
 
-    contours, _ = cv2.findContours(edges, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+    kernel = np.ones((5, 5), np.uint8)
+
+    closed = cv2.morphologyEx(edges, cv2.MORPH_CLOSE, kernel)
+
+    contours, _ = cv2.findContours(closed, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+
     white_image = np.ones_like(resized_image) * 255
 
     # Draw blue contours on the white image
