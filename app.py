@@ -3,6 +3,8 @@ import cv2
 import numpy as np
 import os
 import tempfile
+import base64
+from io import BytesIO
 from skeleton.extractKimiaEDF import generate_skeleton
 
 
@@ -42,6 +44,10 @@ def process_image(file_path):
     # Draw blue contours on the white image
     cv2.drawContours(white_image, contours, -1, (255, 0, 0), 1)
 
+    # Now, we'll convert this image to a base64 string
+    _, buffer = cv2.imencode(".png", white_image)
+    outline_img_base64 = base64.b64encode(buffer.tobytes()).decode("utf-8")
+
     coordinates = get_pixel_coordinates(white_image, scale_x, scale_y)
     height = edges.shape[0]
     contour_strings = [
@@ -50,7 +56,11 @@ def process_image(file_path):
         for point in contour
     ]
 
-    output = {"coordinates": coordinates, "contour_strings": contour_strings}
+    output = {
+        "coordinates": coordinates,
+        "contour_strings": contour_strings,
+        "outline_img_base64": outline_img_base64,
+    }
     return output
 
 
@@ -76,7 +86,10 @@ def upload_image():
         skeleton_img_base64 = generate_skeleton(output["contour_strings"], filename)
 
         return render_template(
-            "result.html", skeleton_img_base64=skeleton_img_base64, filename=filename
+            "result.html",
+            skeleton_img_base64=skeleton_img_base64,
+            outline_img_base64=output["outline_img_base64"],
+            filename=filename,
         )
 
     return "No file was uploaded. Please upload a file.", 400
