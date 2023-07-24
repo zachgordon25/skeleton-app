@@ -118,14 +118,13 @@ def translate():
         )
 
         # Check if the request was successful
-        if response["choices"]:
+        if response["choices"]:  # type: ignore
             # Extract the translated Python code
-            python_code = response.choices[0].text.strip()
+            python_code = response.choices[0].text.strip()  # type: ignore
 
-            # TODO: Send the Python code to a new webpage
-            return f"Translated Python code: {python_code}"
+            return render_template("translated.html", python_code=python_code)
         else:
-            return f"An error occurred: {response['error']['message']}"
+            return f"An error occurred: {response['error']['message']}"  # type: ignore
 
     else:
         return render_template("translate.html")
