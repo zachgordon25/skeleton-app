@@ -1,33 +1,38 @@
+:root {
+  --green: #273f26;
+}
 body {
-    background-color: black;
-    background-repeat: no-repeat;
-    background-attachment: fixed;
-    background-size: cover;
+  background-color: black;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: cover;
 }
 
 #logo {
-    width: 200px;
-    height: 200px;
-    background-image: url('logo.png');
-    background-repeat: no-repeat;
-    background-size: cover;
+  width: 200px;
+  height: 200px;
+  background-image: url('logo.png');
+  background-repeat: no-repeat;
+  background-size: cover;
 }
-.transparent-button {
-    background-color: rgba(255, 255, 255, 0.5); /* white with 50% opacity */
-    border: none;
-    color: black;
-  }
+
+.btn-warning {
+  background-color: var(--green) !important;
+  border: none !important;
+  color: #fff !important;
+}
+
 .container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    gap: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 20px;
 }
-  
+
 .transparent-box {
-    background-color: rgba(255, 255, 255, 0.5); /* white with 50% opacity */
-    padding: 10px;
-    margin: 10px;
-    border: 1px solid black;
+  background-color: rgba(255, 255, 255, 0.5); /* white with 50% opacity */
+  padding: 10px;
+  margin: 10px;
+  border: 1px solid black;
 }
