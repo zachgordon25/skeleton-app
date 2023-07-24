@@ -69,6 +69,7 @@ def home():
     return render_template("upload.html")
 
 
+# --- SKELETON ---
 @app.route("/upload", methods=["POST"])
 def upload_image():
     file = request.files["file"]
@@ -98,6 +99,17 @@ def upload_image():
 @app.route("/uploads/<filename>")
 def send_uploaded_file(filename):
     return send_from_directory("skeleton", filename)
+
+
+# --- TRANSLATOR ---
+@app.route("/translate", methods=["GET", "POST"])
+def translate():
+    if request.method == "POST":
+        matlab_code = request.form.get("code")
+        # TODO: Send matlab_code to the ChatGPT API for translation
+        return "MATLAB code received. It will be translated soon."
+    else:
+        return render_template("translate.html")
 
 
 if __name__ == "__main__":
