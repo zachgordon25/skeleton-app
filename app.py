@@ -1,4 +1,5 @@
-from flask import Flask, request, render_template, send_from_directory
+from flask import Flask, jsonify, request, render_template, send_from_directory
+import openai
 import cv2
 import numpy as np
 import os
@@ -9,6 +10,7 @@ from skeleton.extractKimiaEDF import generate_skeleton
 
 
 app = Flask(__name__)
+openai.api_key = os.getenv("OPENAI_API_KEY")
 
 
 def get_pixel_coordinates(image, scale_x, scale_y):
@@ -105,9 +107,26 @@ def send_uploaded_file(filename):
 @app.route("/translate", methods=["GET", "POST"])
 def translate():
     if request.method == "POST":
-        matlab_code = request.form.get("code")
-        # TODO: Send matlab_code to the ChatGPT API for translation
-        return "MATLAB code received. It will be translated soon."
+        matlab_code = request.form["matlab_code"]
+
+        # Send a POST request to the ChatGPT API
+        response = openai.Completion.create(
+            model="text-davinci-003",
+            prompt=f"Translate the following MATLAB code to Python:\n{matlab_code}",
+            max_tokens=200,
+            temperature=0.6,
+        )
+
+        # Check if the request was successful
+        if response["choices"]:
+            # Extract the translated Python code
+            python_code = response.choices[0].text.strip()
+
+            # TODO: Send the Python code to a new webpage
+            return f"Translated Python code: {python_code}"
+        else:
+            return f"An error occurred: {response['error']['message']}"
+
     else:
         return render_template("translate.html")
 
