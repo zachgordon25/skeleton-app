@@ -1,6 +1,7 @@
 :root {
   --green: #273f26;
 }
+
 body {
   background-color: black;
   background-repeat: no-repeat;
@@ -39,5 +40,6 @@ body {
 
 .form-control,
 pre {
-  max-width: 100% !important;
+  /* max-width: 100% !important; */
+  max-width: 600px !important;
 }
