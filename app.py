@@ -1,4 +1,4 @@
-from flask import Flask, jsonify, request, render_template, send_from_directory
+from flask import Flask, jsonify, request, render_template, send_from_directory, session
 import openai
 import cv2
 import numpy as np
@@ -10,7 +10,8 @@ from skeleton.extractKimiaEDF import generate_skeleton
 
 
 app = Flask(__name__)
-openai.api_key = os.getenv("OPENAI_API_KEY")
+# openai.api_key = os.getenv("OPENAI_API_KEY")
+app.secret_key = os.getenv("SECRET_KEY")
 
 
 def get_pixel_coordinates(image, scale_x, scale_y):
@@ -68,6 +69,7 @@ def process_image(file_path):
 
 @app.route("/")
 def home():
+    session.pop("api_key", None)
     return render_template("upload.html")
 
 
@@ -108,7 +110,12 @@ def send_uploaded_file(filename):
 def translate():
     if request.method == "POST":
         matlab_code = request.form["matlab_code"]
+        openai_api_key = request.form["api_key"]
+        openai.api_key = openai_api_key
         print(f"MATLAB code: {matlab_code}", flush=True)
+
+        # Store the API key in the session
+        session["api_key"] = openai_api_key
 
         # Send a POST request to the ChatGPT API
         response = openai.Completion.create(
@@ -131,7 +138,9 @@ def translate():
             return f"An error occurred: {response['error']['message']}"  # type: ignore
 
     else:
-        return render_template("translate.html")
+        # If there's an API key in the session, use it
+        openai_api_key = session.get("api_key", "")
+        return render_template("translate.html", api_key=openai_api_key)
 
 
 if __name__ == "__main__":
