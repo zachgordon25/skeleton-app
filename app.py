@@ -111,6 +111,11 @@ def translate():
     if request.method == "POST":
         matlab_code = request.form["matlab_code"]
         openai_api_key = request.form["api_key"]
+
+        # Check if the API key is provided
+        if not openai_api_key:
+            return "No API key was provided. Please enter your API key.", 400
+
         openai.api_key = openai_api_key
         print(f"MATLAB code: {matlab_code}", flush=True)
 
@@ -140,6 +145,8 @@ def translate():
     else:
         # If there's an API key in the session, use it
         openai_api_key = session.get("api_key", "")
+        # openai_api_key = os.getenv("OPENAI_API_KEY")
+
         return render_template("translate.html", api_key=openai_api_key)
 
 
