@@ -10,6 +10,10 @@
       integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM"
       crossorigin="anonymous"
     />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism.min.css"
+      rel="stylesheet"
+    />
   </head>
   <body>
     <nav
@@ -64,12 +68,22 @@
         </div>
       </div>
     </nav>
+
     <div class="container-fluid transparent-box">
       <h1>Translation Results</h1>
-      <pre>{{python_code}}</pre>
+      <h2>Original MATLAB code</h2>
+      <pre><code class="language-matlab">{{matlab_code}}</code></pre>
+      <h2>Translated Python code</h2>
+      <pre><code class="language-python">{{python_code}}</code></pre>
       <a href="/translate">Translate more code</a>
     </div>
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-python.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-matlab.min.js"></script>
+    <script>
+      Prism.highlightAll();
+    </script>
     <script
       src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
       integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"

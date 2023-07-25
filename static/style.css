@@ -37,6 +37,7 @@ body {
   border: 1px solid black;
 }
 
-.form-control {
-  max-width: 500px !important;
+.form-control,
+pre {
+  max-width: 100% !important;
 }

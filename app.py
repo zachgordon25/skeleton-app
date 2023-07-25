@@ -108,6 +108,7 @@ def send_uploaded_file(filename):
 def translate():
     if request.method == "POST":
         matlab_code = request.form["matlab_code"]
+        print(f"MATLAB code: {matlab_code}", flush=True)
 
         # Send a POST request to the ChatGPT API
         response = openai.Completion.create(
@@ -121,8 +122,11 @@ def translate():
         if response["choices"]:  # type: ignore
             # Extract the translated Python code
             python_code = response.choices[0].text.strip()  # type: ignore
+            print(f"Python code: {python_code}", flush=True)
 
-            return render_template("translated.html", python_code=python_code)
+            return render_template(
+                "translated.html", matlab_code=matlab_code, python_code=python_code
+            )
         else:
             return f"An error occurred: {response['error']['message']}"  # type: ignore
 
