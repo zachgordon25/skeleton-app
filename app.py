@@ -10,7 +10,6 @@ from skeleton.extractKimiaEDF import generate_skeleton
 
 
 app = Flask(__name__)
-# openai.api_key = os.getenv("OPENAI_API_KEY")
 app.secret_key = os.getenv("SECRET_KEY")
 
 
@@ -70,7 +69,6 @@ def process_image(file_path):
 @app.route("/")
 def home():
     session.pop("api_key", None)
-    # return render_template("upload.html")
     return render_template("index.html")
 
 
