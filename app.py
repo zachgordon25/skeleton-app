@@ -10,7 +10,6 @@ from skeleton.extractKimiaEDF import generate_skeleton
 
 
 app = Flask(__name__)
-# openai.api_key = os.getenv("OPENAI_API_KEY")
 app.secret_key = os.getenv("SECRET_KEY")
 
 
@@ -70,7 +69,6 @@ def process_image(file_path):
 @app.route("/")
 def home():
     session.pop("api_key", None)
-    # return render_template("upload.html")
     return render_template("index.html")
 
 
@@ -148,8 +146,8 @@ def translate():
 
     else:
         # If there's an API key in the session, use it
-        # openai_api_key = session.get("api_key", "")
-        openai_api_key = os.getenv("OPENAI_API_KEY")
+        openai_api_key = session.get("api_key", "")
+        # openai_api_key = os.getenv("OPENAI_API_KEY")
 
         return render_template("translate.html", api_key=openai_api_key)
 
