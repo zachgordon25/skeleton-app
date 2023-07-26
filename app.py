@@ -1,4 +1,4 @@
-from flask import Flask, jsonify, request, render_template, send_from_directory, session
+from flask import Flask, request, render_template, send_from_directory, session
 import openai
 import cv2
 import numpy as np
@@ -70,34 +70,38 @@ def process_image(file_path):
 @app.route("/")
 def home():
     session.pop("api_key", None)
-    return render_template("upload.html")
+    # return render_template("upload.html")
+    return render_template("index.html")
 
 
 # --- SKELETON ---
-@app.route("/upload", methods=["POST"])
+@app.route("/upload", methods=["GET", "POST"])
 def upload_image():
-    file = request.files["file"]
+    if request.method == "POST":
+        file = request.files["file"]
 
-    if file and file.filename:
-        file_path = os.path.join(tempfile.gettempdir(), file.filename)
-        file.save(file_path)
+        if file and file.filename:
+            file_path = os.path.join(tempfile.gettempdir(), file.filename)
+            file.save(file_path)
 
-        # You can access the coordinates with output["coordinates"]
-        # You can also access the contour strings with output["contour_strings"]
+            # You can access the coordinates with output["coordinates"]
+            # You can also access the contour strings with output["contour_strings"]
 
-        output = process_image(file_path)
+            output = process_image(file_path)
 
-        filename = os.path.splitext(file.filename)[0]
-        skeleton_img_base64 = generate_skeleton(output["contour_strings"], filename)
+            filename = os.path.splitext(file.filename)[0]
+            skeleton_img_base64 = generate_skeleton(output["contour_strings"], filename)
 
-        return render_template(
-            "result.html",
-            skeleton_img_base64=skeleton_img_base64,
-            outline_img_base64=output["outline_img_base64"],
-            filename=filename,
-        )
+            return render_template(
+                "result.html",
+                skeleton_img_base64=skeleton_img_base64,
+                outline_img_base64=output["outline_img_base64"],
+                filename=filename,
+            )
 
-    return "No file was uploaded. Please upload a file.", 400
+        return "No file was uploaded. Please upload a file.", 400
+    else:
+        return render_template("upload.html")
 
 
 @app.route("/uploads/<filename>")
@@ -144,8 +148,8 @@ def translate():
 
     else:
         # If there's an API key in the session, use it
-        openai_api_key = session.get("api_key", "")
-        # openai_api_key = os.getenv("OPENAI_API_KEY")
+        # openai_api_key = session.get("api_key", "")
+        openai_api_key = os.getenv("OPENAI_API_KEY")
 
         return render_template("translate.html", api_key=openai_api_key)
 
