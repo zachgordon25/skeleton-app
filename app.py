@@ -133,16 +133,16 @@ def translate():
         )
 
         # Check if the request was successful
-        if response["choices"]:  # type: ignore
+        if response["choices"]:
             # Extract the translated Python code
-            python_code = response.choices[0].text.strip()  # type: ignore
+            python_code = response.choices[0].text.strip()
             print(f"Python code: {python_code}", flush=True)
 
             return render_template(
                 "translated.html", matlab_code=matlab_code, python_code=python_code
             )
         else:
-            return f"An error occurred: {response['error']['message']}"  # type: ignore
+            return f"An error occurred: {response['error']['message']}", 400
 
     else:
         # If there's an API key in the session, use it
