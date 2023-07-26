@@ -148,8 +148,8 @@ def translate():
 
     else:
         # If there's an API key in the session, use it
-        # openai_api_key = session.get("api_key", "")
-        openai_api_key = os.getenv("OPENAI_API_KEY")
+        openai_api_key = session.get("api_key", "")
+        # openai_api_key = os.getenv("OPENAI_API_KEY")
 
         return render_template("translate.html", api_key=openai_api_key)
 

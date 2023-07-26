@@ -62,6 +62,15 @@ Install required Python packages
 pip install -r requirements.txt
 ```
 
+### Setup Environment Variables
+
+Make a copy of the example environment variables file
+
+```shell
+cp .env.example .env
+```
+Add your [OpenAI API key](https://beta.openai.com/account/api-keys) and a secret key of your choosing to the newly created `.env` file.
+
 ### Run the app
 ```shell
 flask run
