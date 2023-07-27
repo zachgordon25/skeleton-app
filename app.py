@@ -125,17 +125,21 @@ def translate():
         session["api_key"] = openai_api_key
 
         # Send a POST request to the ChatGPT API
-        response = openai.Completion.create(
-            model="text-davinci-003",
-            prompt=f"Translate the following MATLAB code to Python:\n{matlab_code}",
-            max_tokens=200,
-            temperature=0.6,
+        response = openai.ChatCompletion.create(
+            model="gpt-3.5-turbo",
+            messages=[
+                {
+                    "role": "system",
+                    "content": "Translate the following MATLAB code to Python:",
+                },
+                {"role": "user", "content": f"{matlab_code}"},
+            ],
         )
 
         # Check if the request was successful
-        if response["choices"]:
+        if response.choices:
             # Extract the translated Python code
-            python_code = response.choices[0].text.strip()
+            python_code = response.choices[0].message.content
             print(f"Python code: {python_code}", flush=True)
 
             return render_template(
