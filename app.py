@@ -119,7 +119,6 @@ def translate():
             return "No API key was provided. Please enter your API key.", 400
 
         openai.api_key = openai_api_key
-        print(f"MATLAB code: {matlab_code}", flush=True)
 
         # Store the API key in the session
         session["api_key"] = openai_api_key
@@ -140,7 +139,6 @@ def translate():
         if response.choices:
             # Extract the translated Python code
             python_code = response.choices[0].message.content
-            print(f"Python code: {python_code}", flush=True)
 
             return render_template(
                 "translated.html", matlab_code=matlab_code, python_code=python_code
@@ -151,10 +149,9 @@ def translate():
     else:
         # If there's an API key in the session, use it
         openai_api_key = session.get("api_key", "")
-        # openai_api_key = os.getenv("OPENAI_API_KEY")
 
         return render_template("translate.html", api_key=openai_api_key)
 
 
 if __name__ == "__main__":
-    app.run(debug=True, use_reloader=True)
+    app.run()
