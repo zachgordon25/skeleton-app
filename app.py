@@ -111,8 +111,8 @@ def send_uploaded_file(filename):
 @app.route("/translate", methods=["GET", "POST"])
 def translate():
     if request.method == "POST":
-        matlab_code = request.form["matlab_code"]
-        openai_api_key = request.form["api_key"]
+        matlab_code = request.form.get("matlab_code")
+        openai_api_key = request.form.get("api_key")
 
         # Check if the API key is provided
         if not openai_api_key:
@@ -123,33 +123,31 @@ def translate():
         # Store the API key in the session
         session["api_key"] = openai_api_key
 
-        # Send a POST request to the ChatGPT API
-        response = openai.ChatCompletion.create(
-            model="gpt-3.5-turbo",
-            messages=[
-                {
-                    "role": "system",
-                    "content": "Translate the following MATLAB code to Python:",
-                },
-                {"role": "user", "content": f"{matlab_code}"},
-            ],
-        )
+        try:
+            # Send a POST request to the ChatGPT API
+            response = openai.ChatCompletion.create(
+                model="gpt-3.5-turbo",
+                messages=[
+                    {
+                        "role": "system",
+                        "content": "You are a skilled Python developer with a deep understanding of MATLAB. Your task is to translate the following MATLAB code into equivalent, efficient, and clean Python code:",
+                    },
+                    {"role": "user", "content": f"{matlab_code}"},
+                ],
+            )
 
-        # Check if the request was successful
-        if response.choices:
             # Extract the translated Python code
             python_code = response.choices[0].message.content
 
             return render_template(
                 "translated.html", matlab_code=matlab_code, python_code=python_code
             )
-        else:
-            return f"An error occurred: {response['error']['message']}", 400
+        except Exception as e:
+            return f"An error occurred: {str(e)}", 400
 
     else:
         # If there's an API key in the session, use it
         openai_api_key = session.get("api_key", "")
-
         return render_template("translate.html", api_key=openai_api_key)
 
 
