@@ -118,7 +118,7 @@ def translate():
                 messages=[
                     {
                         "role": "system",
-                        "content": "You are a skilled Python developer with a deep understanding of MATLAB. Your task is to translate the following MATLAB code into equivalent, efficient, and clean Python code:",
+                        "content": "You are a skilled Python developer with a deep understanding of MATLAB. Your task is to translate the provided MATLAB code into Python. Please return only the Python code, without any commentary or explanation. Aim for an efficient, clean solution that adheres to Python best practices.",
                     },
                     {"role": "user", "content": f"{matlab_code}"},
                 ],
