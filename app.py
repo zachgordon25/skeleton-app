@@ -114,7 +114,7 @@ def translate():
         try:
             # Send a POST request to the ChatGPT API
             response = openai.ChatCompletion.create(
-                model="gpt-3.5-turbo",
+                model="gpt-3.5-turbo-16k-0613",
                 messages=[
                     {
                         "role": "system",
