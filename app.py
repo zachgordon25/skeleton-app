@@ -5,7 +5,6 @@ import numpy as np
 import os
 import tempfile
 import base64
-from io import BytesIO
 from skeleton.extractKimiaEDF import generate_skeleton
 
 
