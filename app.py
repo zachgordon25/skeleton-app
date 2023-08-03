@@ -1,15 +1,20 @@
-from flask import Flask, request, render_template, send_from_directory, session
-import openai
+# Standard library imports
+import os
+import base64
+import tempfile
+
+# Related third-party imports
 import cv2
 import numpy as np
-import os
-import tempfile
-import base64
+from flask import Flask, request, render_template, send_from_directory
+import openai
+
+# Local application/library specific imports
 from skeleton.extractKimiaEDF import generate_skeleton
 
 
 app = Flask(__name__)
-app.secret_key = os.getenv("SECRET_KEY")
+openai_api_key = os.getenv("OPENAI_API_KEY")
 
 
 def get_pixel_coordinates(image, scale_x, scale_y):
@@ -67,7 +72,6 @@ def process_image(file_path):
 
 @app.route("/")
 def home():
-    session.pop("api_key", None)
     return render_template("index.html")
 
 
@@ -111,25 +115,15 @@ def send_uploaded_file(filename):
 def translate():
     if request.method == "POST":
         matlab_code = request.form.get("matlab_code")
-        openai_api_key = request.form.get("api_key")
-
-        # Check if the API key is provided
-        if not openai_api_key:
-            return "No API key was provided. Please enter your API key.", 400
-
-        openai.api_key = openai_api_key
-
-        # Store the API key in the session
-        session["api_key"] = openai_api_key
 
         try:
             # Send a POST request to the ChatGPT API
             response = openai.ChatCompletion.create(
-                model="gpt-3.5-turbo",
+                model="gpt-4",
                 messages=[
                     {
                         "role": "system",
-                        "content": "You are a skilled Python developer with a deep understanding of MATLAB. Your task is to translate the following MATLAB code into equivalent, efficient, and clean Python code:",
+                        "content": "You are a skilled Python developer with a deep understanding of MATLAB. Your task is to translate the provided MATLAB code into Python. Please return only the Python code, without any commentary or explanation. Aim for an efficient, clean solution that adheres to Python best practices.",
                     },
                     {"role": "user", "content": f"{matlab_code}"},
                 ],
@@ -145,9 +139,7 @@ def translate():
             return f"An error occurred: {str(e)}", 400
 
     else:
-        # If there's an API key in the session, use it
-        openai_api_key = session.get("api_key", "")
-        return render_template("translate.html", api_key=openai_api_key)
+        return render_template("translate.html")
 
 
 if __name__ == "__main__":

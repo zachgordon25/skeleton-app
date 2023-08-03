@@ -69,14 +69,17 @@ Make a copy of the example environment variables file
 ```shell
 cp .env.example .env
 ```
-Add your [OpenAI API key](https://beta.openai.com/account/api-keys) and a secret key of your choosing to the newly created `.env` file.
+
+Add your [OpenAI API key](https://platform.openai.com/account/api-keys) to the newly created `.env` file.
 
 ### Run the app
+
 ```shell
 flask run
 ```
 
 ### Run the app in debug mode
+
 ```shell
-python app.py
+flask run --debug
 ```
