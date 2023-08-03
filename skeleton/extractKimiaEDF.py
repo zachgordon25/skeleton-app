@@ -1,18 +1,16 @@
-import os
+# Standard library imports
+import base64
+from io import BytesIO
+
+# Related third-party imports
 import numpy as np
-from scipy.io import savemat
 import matplotlib
 
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
-from pathlib import Path
-from PIL import Image  # ZG
+
+# Local application/library specific imports
 from skeleton.BlumMedialAxis import BlumMedialAxis
-from scipy.spatial import Delaunay
-
-
-import base64
-from io import BytesIO
 
 
 def generate_skeleton(contour_strings, filename):

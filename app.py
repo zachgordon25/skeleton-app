@@ -1,10 +1,15 @@
-from flask import Flask, request, render_template, send_from_directory
-import openai
+# Standard library imports
+import os
+import base64
+import tempfile
+
+# Related third-party imports
 import cv2
 import numpy as np
-import os
-import tempfile
-import base64
+from flask import Flask, request, render_template, send_from_directory
+import openai
+
+# Local application/library specific imports
 from skeleton.extractKimiaEDF import generate_skeleton
 
 
