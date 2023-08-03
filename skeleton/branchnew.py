@@ -1,7 +1,6 @@
 # %%writefile MATTTTLAB/branchnew.py
 import numpy as np
 from itertools import combinations
-from scipy.spatial import distance
 from typing import List
 
 

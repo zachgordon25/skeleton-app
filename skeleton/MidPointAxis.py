@@ -1,10 +1,11 @@
 # %%writefile MATTTTLAB/MidPointAxis.py
 import numpy as np
-from scipy.spatial import Delaunay
 import matplotlib.pyplot as plt
 from scipy.spatial import ConvexHull
+
 from calculate_medial_axis import calculate_medial_axis
 from calculate_medial_order import calculate_medial_order
+from skeleton.BlumMedialAxis import BlumMedialAxis
 
 
 class MidPointAxis:

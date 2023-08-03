@@ -15,6 +15,8 @@ from skeleton.extractKimiaEDF import generate_skeleton
 
 app = Flask(__name__)
 openai_api_key = os.getenv("OPENAI_API_KEY")
+if openai_api_key is None:
+    raise ValueError("OPENAI_API_KEY environment variable is not set")
 
 
 def get_pixel_coordinates(image, scale_x, scale_y):

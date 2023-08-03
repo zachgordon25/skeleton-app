@@ -1,5 +1,6 @@
 # %%writefile MATTTTLAB/Nanoboys.py
 import numpy as np
+from scipy.spatial import Delaunay
 
 
 def nanoboys(XY0, sigma, Dt, Stop):
@@ -42,7 +43,7 @@ def medial_axis(z):
     if np.sum((z.real - np.roll(z.real, -1)) * (z.imag + np.roll(z.imag, -1))) > 0:
         z = np.flipud(z)
 
-    tri = np.sort(np.asarray(delaunay(z.real, z.imag)).T, axis=1)
+    tri = np.sort(np.asarray(Delaunay(z.real, z.imag)).T, axis=1)
 
     u = z[tri[:, 0]]
     v = z[tri[:, 1]]

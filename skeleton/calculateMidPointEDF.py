@@ -1,4 +1,7 @@
 # %%writefile MATTTTLAB/calculateMidPointEDF.py
+import numpy as np
+
+
 def calculate_mid_point_edf(bma):
     temp = bma.copy()
     indices_of_constrained_ends = temp.find_constrained_ends()

@@ -1,5 +1,7 @@
 import numpy as np
 
+from skeleton.sparse_to_csr import sparse_to_csr
+
 
 def dijkstra(A, u):
     if isinstance(A, dict):
