@@ -1,0 +1,81 @@
+---LinkedList---
+classdef Node
+    properties
+        data
+        next
+    end
+end
+
+classdef LinkedList
+    properties
+        head
+    end
+    methods
+        function obj = LinkedList()
+            obj.head = Node();
+        end
+        
+        function obj = insert(obj, value)
+            newNode = Node();
+            newNode.data = value;
+            newNode.next = obj.head;
+            obj.head = newNode;
+        end
+        
+        function display(obj)
+            currentNode = obj.head;
+            while ~isempty(currentNode)
+                disp(currentNode.data);
+                currentNode = currentNode.next;
+            end
+        end
+    end
+end
+
+---QuickSort---
+function arr = quicksort(arr)
+    if numel(arr) <= 1 % Array of a single element is already sorted
+        return;
+    end
+    pivot = arr(end); % Choose a pivot
+    left = arr(arr < pivot);
+    center = arr(arr == pivot);
+    right = arr(arr > pivot);
+    arr = [quicksort(left) center quicksort(right)]; % Recursively sort
+end
+
+---Complex---
+A = [1 2; 3 4; 5 6];
+[U, S, V] = svd(A);
+
+
+---Recursive---
+function result = factorial_recursive(n)
+    if n == 0
+        result = 1;
+    else
+        result = n * factorial_recursive(n-1);
+    end
+end
+
+
+---Multithreading---
+parpool(2);
+parfor i = 1:10
+    A(i) = i^2;
+end
+
+---Modular---
+function roots = findRoots(a, b, c)
+    discr = calculateDiscriminant(a, b, c);
+    roots = calculateRoots(a, b, discr);
+end
+
+function discr = calculateDiscriminant(a, b, c)
+    discr = b^2 - 4*a*c;
+end
+
+function roots = calculateRoots(a, b, discr)
+    roots(1) = (-b + sqrt(discr)) / (2*a);
+    roots(2) = (-b - sqrt(discr)) / (2*a);
+end
