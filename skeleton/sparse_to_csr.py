@@ -1,4 +1,3 @@
-# %%writefile MATTTTLAB/sparse_to_csr.py
 import numpy as np
 
 

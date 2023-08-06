@@ -1,4 +1,3 @@
-# %%writefile MATTTTLAB/Nanoboys.py
 import numpy as np
 from scipy.spatial import Delaunay
 

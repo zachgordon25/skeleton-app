@@ -1,6 +1,3 @@
-# This is from the notebook
-# %%writefile MATTTTLAB/branchesforbma.py
-
 import numpy as np
 from itertools import combinations
 from scipy.sparse.csgraph import shortest_path  # ZG

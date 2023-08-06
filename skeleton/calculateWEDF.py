@@ -1,4 +1,3 @@
-# %%writefile MATTTTLAB/calculateWEDF.py
 import copy
 import numpy as np
 

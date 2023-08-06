@@ -1,4 +1,3 @@
-# %%writefile MATTTTLAB/CalculateMIDEDF.py
 import numpy as np
 
 

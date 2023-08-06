@@ -1,4 +1,3 @@
-# %%writefile MATTTTLAB/calculate_medial_axis.py
 import numpy as np
 from scipy.spatial import Delaunay
 

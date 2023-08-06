@@ -1,4 +1,3 @@
-# %%writefile MATTTTLAB/BlumMedialAxis.py
 import numpy as np
 import matplotlib.pyplot as plt  # ZG
 
@@ -146,7 +145,6 @@ class BlumMedialAxis:
     def branches_for_bma(self):
         return calculate_branches_for_bma(self)
 
-    # ZG - WORKING!!!!!
     def plot_with_edges(self):
         figure1 = plt.figure()
 

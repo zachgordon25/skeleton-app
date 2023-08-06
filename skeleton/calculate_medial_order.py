@@ -1,4 +1,3 @@
-# %%writefile MATTTTLAB/calculate_medial_order.py
 import numpy as np
 from scipy.sparse import csr_matrix
 

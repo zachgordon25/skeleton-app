@@ -1,4 +1,3 @@
-# %%writefile MATTTTLAB/MidPointAxis.py
 import numpy as np
 import matplotlib.pyplot as plt
 from scipy.spatial import ConvexHull

@@ -1,4 +1,3 @@
-# %%writefile MATTTTLAB/calculateMidPointEDF.py
 import numpy as np
 
 
