@@ -1,15 +1,12 @@
-# Standard library imports
 import base64
 from io import BytesIO
 
-# Related third-party imports
-import numpy as np
 import matplotlib
+import numpy as np
 
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 
-# Local application/library specific imports
 from skeleton.BlumMedialAxis import BlumMedialAxis
 
 

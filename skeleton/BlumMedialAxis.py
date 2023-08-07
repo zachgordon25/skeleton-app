@@ -1,9 +1,9 @@
-import numpy as np
 import matplotlib.pyplot as plt  # ZG
+import numpy as np
 
+from skeleton.branchesforbma import calculate_branches_for_bma
 from skeleton.calculate_medial_axis import calculate_medial_axis
 from skeleton.calculate_medial_order import calculate_medial_order
-from skeleton.branchesforbma import calculate_branches_for_bma
 from skeleton.calculateWEDF import calculate_wedf  # ZG
 
 

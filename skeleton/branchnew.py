@@ -1,6 +1,7 @@
-import numpy as np
 from itertools import combinations
 from typing import List
+
+import numpy as np
 
 
 def branchnew(mord, medial_data):

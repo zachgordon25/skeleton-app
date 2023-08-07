@@ -1,9 +1,9 @@
-import numpy as np
 import matplotlib.pyplot as plt
-from scipy.spatial import ConvexHull
-
+import numpy as np
 from calculate_medial_axis import calculate_medial_axis
 from calculate_medial_order import calculate_medial_order
+from scipy.spatial import ConvexHull
+
 from skeleton.BlumMedialAxis import BlumMedialAxis
 
 

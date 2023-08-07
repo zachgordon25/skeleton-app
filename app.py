@@ -1,17 +1,13 @@
-# Standard library imports
-import os
 import base64
+import os
 import tempfile
 
-# Related third-party imports
 import cv2
 import numpy as np
-from flask import Flask, request, render_template, send_from_directory
 import openai
+from flask import Flask, render_template, request, send_from_directory
 
-# Local application/library specific imports
 from skeleton.extractKimiaEDF import generate_skeleton
-
 
 app = Flask(__name__)
 openai_api_key = os.getenv("OPENAI_API_KEY")

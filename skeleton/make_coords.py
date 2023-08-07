@@ -1,7 +1,8 @@
-import cv2
-import numpy as np
-import matplotlib.pyplot as plt
 import os
+
+import cv2
+import matplotlib.pyplot as plt
+import numpy as np
 
 
 def get_pixel_coordinates(image, scale_x, scale_y):
