@@ -55,9 +55,9 @@
                 Skeleton Generator
               </a>
               <ul class="dropdown-menu">
-                <li><a class="dropdown-item active" href="/upload">Upload Image</a></li>
+                <li><a class="dropdown-item" href="/upload">Upload Image</a></li>
                 <div class="dropdown-divider"></div>
-                <li><a class="dropdown-item" href="/history">See Skeletons</a></li>
+                <li><a class="dropdown-item active" href="/history">See Skeletons</a></li>
               </ul>
             </li>
 
@@ -69,14 +69,19 @@
       </div>
     </nav>
 
-    <div class="container-fluid transparent-box">
-      <h1>Upload your image</h1>
-      <p>Upload your image to the server:</p>
-
-      <form action="/upload" method="post" enctype="multipart/form-data">
-        <input type="file" name="file" />
-        <input type="submit" value="Upload" class="btn btn-warning transparent-button" />
-      </form>
+    <div class="container">
+      <h1>History of Generated Skeletons</h1>
+      <ul>
+        {% for file in skeleton_files %}
+        <li>
+          <img
+            src="{{ url_for('static', filename='history/' + file) }}"
+            alt="Skeleton"
+            width="200"
+          />
+        </li>
+        {% endfor %}
+      </ul>
     </div>
   </body>
 </html>
