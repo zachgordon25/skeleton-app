@@ -43,11 +43,26 @@
             <li class="nav-item">
               <a class="nav-link active" aria-current="page" href="/">Home</a>
             </li>
-            <li class="nav-item">
-              <a class="nav-link" aria-current="page" href="/upload">Skeleton Generator</a>
+
+            <li class="nav-item dropdown">
+              <a
+                class="nav-link dropdown-toggle"
+                href="#"
+                role="button"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+              >
+                Skeleton Generator
+              </a>
+              <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="/upload">Upload Image</a></li>
+                <div class="dropdown-divider"></div>
+                <li><a class="dropdown-item" href="/history">See Skeletons</a></li>
+              </ul>
             </li>
+
             <li class="nav-item">
-              <a class="nav-link" href="/translate">Translator</a>
+              <a class="nav-link" href="/translate">M-to-PY</a>
             </li>
           </ul>
         </div>
@@ -59,12 +74,12 @@
       <p>This application has two main features:</p>
       <ul>
         <li><strong>Skeleton Generator:</strong> Generates a skeleton from an uploaded image.</li>
-        <li><strong>Translator:</strong> Converts Matlab code into Python.</li>
+        <li><strong>M-to-PY:</strong> Converts MATLAB code into Python.</li>
       </ul>
 
       <div class="links">
         <a href="/upload" class="btn btn-primary">Go to Skeleton Generator</a>
-        <a href="/translate" class="btn btn-primary">Go to Translator</a>
+        <a href="/translate" class="btn btn-primary">Go to M-to-PY</a>
       </div>
     </div>
   </body>
