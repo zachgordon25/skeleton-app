@@ -2,7 +2,7 @@
 <html>
   <head>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Skeleton App</title>
+    <title>History of Skeletons</title>
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}" />
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
@@ -41,12 +41,12 @@
         <div class="collapse navbar-collapse" id="navbarNavDropdown">
           <ul class="navbar-nav">
             <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="/">Home</a>
+              <a class="nav-link" aria-current="page" href="/">Home</a>
             </li>
 
             <li class="nav-item dropdown">
               <a
-                class="nav-link dropdown-toggle"
+                class="nav-link active dropdown-toggle"
                 href="#"
                 role="button"
                 data-bs-toggle="dropdown"
@@ -57,7 +57,7 @@
               <ul class="dropdown-menu">
                 <li><a class="dropdown-item" href="/upload">Upload Image</a></li>
                 <div class="dropdown-divider"></div>
-                <li><a class="dropdown-item" href="/history">See Skeletons</a></li>
+                <li><a class="dropdown-item active" href="/history">See Skeletons</a></li>
               </ul>
             </li>
 
@@ -69,17 +69,20 @@
       </div>
     </nav>
 
-    <div class="container">
-      <h1>Home</h1>
-      <p>This application has two main features:</p>
-      <ul>
-        <li><strong>Skeleton Generator:</strong> Generates a skeleton from an uploaded image.</li>
-        <li><strong>M-to-PY:</strong> Converts MATLAB code into Python.</li>
-      </ul>
-
-      <div class="links">
-        <a href="/upload" class="btn btn-primary">Go to Skeleton Generator</a>
-        <a href="/translate" class="btn btn-primary">Go to M-to-PY</a>
+    <div class="container mt-4">
+      <h1>History of Generated Skeletons</h1>
+      <div class="row row-cols-1 row-cols-md-3 g-4">
+        {% for file in skeleton_files %}
+        <div class="col">
+          <div class="card">
+            <img
+              src="{{ url_for('static', filename='history/' + file) }}"
+              alt="Skeleton"
+              class="card-img-top"
+            />
+          </div>
+        </div>
+        {% endfor %}
       </div>
     </div>
   </body>

@@ -1,4 +1,5 @@
 import base64
+import os
 from io import BytesIO
 
 import matplotlib
@@ -27,6 +28,9 @@ def generate_skeleton(contour_strings, filename):
 
     # Save figure to buffer in PNG format
     plt.savefig(buf, format="png")
+
+    # Save the figure to the history directory
+    plt.savefig(f"static/history/{filename}.png")
 
     # Get buffer contents and encode in base64
     image_base64 = base64.b64encode(buf.getvalue()).decode("utf-8")

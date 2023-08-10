@@ -105,6 +105,22 @@ def send_uploaded_file(filename):
     return send_from_directory("skeleton", filename)
 
 
+@app.route("/history")
+def history():
+    # Path to the history directory
+    history_path = "static/history"
+
+    # List all the image files in the history directory
+    skeleton_files = [
+        f
+        for f in os.listdir(history_path)
+        if os.path.isfile(os.path.join(history_path, f))
+    ]
+
+    # Render the history template and pass the skeleton files
+    return render_template("history.html", skeleton_files=skeleton_files)
+
+
 # --- TRANSLATOR ---
 @app.route("/translate", methods=["GET", "POST"])
 def translate():
