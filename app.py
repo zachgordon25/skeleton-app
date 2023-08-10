@@ -16,12 +16,9 @@ if openai_api_key is None:
 
 
 def get_pixel_coordinates(image, scale_x, scale_y):
-    coords = []
-    for y in range(image.shape[0]):
-        for x in range(image.shape[1]):
-            if np.any(image[y, x] != [255, 255, 255]):
-                coords.append((x * scale_x, y * scale_y))
-    return coords
+    non_zero_indices = np.nonzero(np.any(image != [255, 255, 255], axis=-1))
+    scaled_coords = zip(non_zero_indices[1] * scale_x, non_zero_indices[0] * scale_y)
+    return list(scaled_coords)
 
 
 def process_image(file_path):
