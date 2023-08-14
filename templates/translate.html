@@ -75,8 +75,23 @@
         <label for="matlab_code">Enter your MATLAB code:</label><br />
         <textarea id="matlab_code" name="matlab_code" rows="10" class="form-control"></textarea
         ><br />
+
+        <!-- Loading Indicator -->
+        <div id="loading" style="display: none">
+          <div class="spinner-border text-primary" role="status">
+            <span class="visually-hidden">Translating...</span>
+          </div>
+        </div>
+
         <input type="submit" value="Translate" class="btn btn-warning transparent-button" />
       </form>
     </div>
+
+    <script>
+      document.querySelector('.form-outline').addEventListener('submit', function () {
+        // Show the loading indicator
+        document.getElementById('loading').style.display = 'block';
+      });
+    </script>
   </body>
 </html>
