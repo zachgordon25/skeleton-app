@@ -12,6 +12,7 @@ cycler==0.11.0
 Flask==2.3.2
 fonttools==4.42.0
 frozenlist==1.4.0
+gunicorn==21.2.0
 idna==3.4
 itsdangerous==2.1.2
 Jinja2==3.1.2
