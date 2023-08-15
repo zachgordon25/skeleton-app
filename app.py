@@ -5,13 +5,16 @@ import tempfile
 import cv2
 import numpy as np
 import openai
+from dotenv import load_dotenv
 from flask import Flask, render_template, request, send_from_directory
 
 from skeleton.extractKimiaEDF import generate_skeleton
 
 app = Flask(__name__)
-openai_api_key = os.getenv("OPENAI_API_KEY")
-if openai_api_key is None:
+load_dotenv()
+
+openai.api_key = os.getenv("OPENAI_API_KEY")
+if openai.api_key is None:
     raise ValueError("OPENAI_API_KEY environment variable is not set")
 
 
@@ -130,7 +133,7 @@ def translate():
         try:
             # Send a POST request to the ChatGPT API
             response = openai.ChatCompletion.create(
-                model="gpt-4",
+                model="gpt-3.5-turbo-16k-0613",
                 messages=[
                     {
                         "role": "system",
