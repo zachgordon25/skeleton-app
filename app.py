@@ -154,7 +154,3 @@ def translate():
 
     else:
         return render_template("translate.html")
-
-
-if __name__ == "__main__":
-    app.run()
